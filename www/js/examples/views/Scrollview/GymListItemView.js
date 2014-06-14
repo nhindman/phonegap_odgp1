@@ -5,7 +5,7 @@ define(function(require, exports, module) {
     var Transform = require('famous/core/Transform');
     var StateModifier = require('famous/modifiers/StateModifier');
 
-    var GymData = require('src/examples/data/GymData.js');
+    var GymData = require('examples/data/GymData.js');
     var ContainerSurface = require('famous/surfaces/ContainerSurface')
 
     function GymListItem(options, data, index) {

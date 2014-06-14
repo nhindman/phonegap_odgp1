@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     var PassesStripView = require('examples/views/Scrollview/PassesStripView');
     var FeaturedView    = require('examples/views/Scrollview/FeaturedView');
     var TicketView      = require('examples/views/Scrollview/TicketView');
-    var StripData       = require('src/examples/data/StripData.js');
+    var StripData       = require('examples/data/StripData.js');
 
 
     function MenuView() {

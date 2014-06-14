@@ -9,7 +9,7 @@ define(function(require, exports, module) {
     GenericSync.register({'mouse': MouseSync, 'touch': TouchSync});
     var StateModifier = require('famous/modifiers/StateModifier');
     var Scrollview = require("famous/views/Scrollview");
-    var GymData = require('src/examples/data/GymData.js');
+    var GymData = require('examples/data/GymData.js');
 
     var GymListItem = require('examples/views/Scrollview/GymListItemView');
     var DetailView = require('examples/views/Scrollview/DetailView');
