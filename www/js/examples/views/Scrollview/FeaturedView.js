@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     var createBacking = function() {
         var backSurface = new Surface({
             size: [120, 164],
-            content: '<img width="120" src="src/img/friends.png"/>'
+            content: '<img width="120" src="js/img/friends.png"/>'
         });
 
         this._add(backSurface);

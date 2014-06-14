@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 
         //star image not being added because it disables scrolling
         this.star = new Surface({
-          content: '<img width="23" src="src/img/star.png"/>',
+          content: '<img width="23" src="js/img/star.png"/>',
           // size: [true, true],
           properties: {
             zIndex: 100

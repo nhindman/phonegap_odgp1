@@ -74,7 +74,7 @@ define(function(require, exports, module) {
             textAlign: "center",
             zIndex: 23
           },
-          content: '<img width="22.5" src="src/img/best-arrow.png"/>'
+          content: '<img width="22.5" src="js/img/best-arrow.png"/>'
         });
 
         this.arrowModifier = new Modifier({
@@ -108,7 +108,7 @@ define(function(require, exports, module) {
         });
 
         this.closeIcon = new Surface({
-            content: '<img width="33" src="src/img/white-x.png"/>',
+            content: '<img width="33" src="js/img/white-x.png"/>',
             size: [true, true]
         });
 
@@ -197,7 +197,7 @@ define(function(require, exports, module) {
 
         this.firstX = new Surface({
             classes: ['email-validation-ind'],
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             }, 
@@ -211,7 +211,7 @@ define(function(require, exports, module) {
 
         this.secondX = new Surface({
             classes: ['password-validation-ind'],
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             },

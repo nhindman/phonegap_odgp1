@@ -110,7 +110,7 @@ define(function(require, exports, module) {
         textAlign: "center",
         zIndex: 23
       },
-      content: '<img width="22.5" src="src/img/best-arrow.png"/>'
+      content: '<img width="22.5" src="js/img/best-arrow.png"/>'
     })
 
     this.arrowModifier = new Modifier({
@@ -213,7 +213,7 @@ define(function(require, exports, module) {
 
     for (var i = 0; i < this.options.data.photo.content.length; i++) {
 
-      this.addPhotoSurface('<img width="320" height="'+thirdWindowHeight+'" src="src/img/'+ this.options.data.photo.content[i] + '"/>');
+      this.addPhotoSurface('<img width="320" height="'+thirdWindowHeight+'" src="js/img/'+ this.options.data.photo.content[i] + '"/>');
 
     }
 
@@ -266,7 +266,7 @@ define(function(require, exports, module) {
 
     this.gymPassIcon = new Surface({
       size:[gymPassIconSize,true],
-      content: '<img width="'+gymPassIconSize+'" src="src/img/white_pass.png"/>'
+      content: '<img width="'+gymPassIconSize+'" src="js/img/white_pass.png"/>'
     })
 
     //setting angle for gym pass icon
@@ -483,12 +483,12 @@ define(function(require, exports, module) {
     this.triangle = new Surface({
       size: [15, 15],
       classes: ["triangle"],
-      content: '<img width="20" src="src/img/gray-triangle.png"/>'
+      content: '<img width="20" src="js/img/gray-triangle.png"/>'
     });
 
     this.detailSequence.push(this.triangle);
     this.addOneDetailSurface([window.innerWidth,true],['<div style="background-color: rgb(236, 240, 241); height: 100%; font-size: 81%" class="hours"><span class="hours-today">Hours Today: 6:00 AM - 10:00PM</span>','<span style="float: right; color: green" class="open-or-closed">Open</span></div>'].join(''));
-    // this.addOneDetailSurface([window.innerWidth,true],'<div style="background-color: #CFCFCF; height: 100%; font-size: 81%; box-shadow: rgba(0,0,0,.2); font-weight: bold"><div class="gym-detail1"><img src="src/img/black-dumbell.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="src/img/swimming.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="src/img/sauna.png"/></div>');
+    // this.addOneDetailSurface([window.innerWidth,true],'<div style="background-color: #CFCFCF; height: 100%; font-size: 81%; box-shadow: rgba(0,0,0,.2); font-weight: bold"><div class="gym-detail1"><img src="js/img/black-dumbell.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="js/img/swimming.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="js/img/sauna.png"/></div>');
     this.addOneDetailSurface([window.innerWidth,true],'<div style="background-color: rgb(236, 240, 241); height: 100%; font-size: 81%; box-shadow: rgba(0,0,0,.2); font-weight: bold" class="gym-detail1">A no-B.S. weightlifters gym with loads of space and a friendly staff.</div>');
     var latitude = this.options.data.options.data.gym_latitudes[this.options.data.itemIndex];
     var longitude = this.options.data.options.data.gym_longitudes[this.options.data.itemIndex];

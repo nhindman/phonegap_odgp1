@@ -203,7 +203,7 @@ define(function(require, exports, module) {
         });
 
         this.firstX = new Surface({
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             }, 
@@ -216,7 +216,7 @@ define(function(require, exports, module) {
         });
 
         this.secondX = new Surface({
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             },
@@ -229,7 +229,7 @@ define(function(require, exports, module) {
         });
 
         this.thirdX = new Surface({
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             },
@@ -242,7 +242,7 @@ define(function(require, exports, module) {
         });
 
         this.fourthX = new Surface({
-            content: '<img width="33" src="src/img/red-x.png"/>', 
+            content: '<img width="33" src="js/img/red-x.png"/>', 
             properties: {
                 backgroundColor: 'white'
             },
@@ -439,7 +439,7 @@ define(function(require, exports, module) {
             if (this.checker == false){
                 this.checker = true;
                 console.log("checkbox clicked!");
-                this.checkbox.setContent('<img width="20" src="src/img/check-mark.png"/>');
+                this.checkbox.setContent('<img width="20" src="js/img/check-mark.png"/>');
             } else {
                 this.checker = false;
                 this.checkbox.setContent('<div></div>');
@@ -448,7 +448,7 @@ define(function(require, exports, module) {
 
         this.lock2 = new Surface({
             classes: ["lock2"], 
-            content: '<img width="30" src="src/img/grey-lock.png"/>', 
+            content: '<img width="30" src="js/img/grey-lock.png"/>', 
             size: [true,true]
         });
 

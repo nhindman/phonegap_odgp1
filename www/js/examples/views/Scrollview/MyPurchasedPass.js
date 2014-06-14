@@ -69,7 +69,7 @@ define(function(require, exports, module) {
             textAlign: "center",
             zIndex: 23
           },
-          content: '<img width="18.5" src="src/img/good-hamburger.png"/>'
+          content: '<img width="18.5" src="js/img/good-hamburger.png"/>'
         });
 
         this.hamburgerModifier = new Modifier({
@@ -90,7 +90,7 @@ define(function(require, exports, module) {
         });
 
         this.closeIcon = new Surface({
-            content: '<img width="33" src="src/img/black-x.png"/>',
+            content: '<img width="33" src="js/img/black-x.png"/>',
             size: [true, true]
         });
 
@@ -134,7 +134,7 @@ define(function(require, exports, module) {
         this.ticketBackground = new Surface({
             classes: ["ticket-background"], 
             size: [true, undefined], 
-            content: '<img src="src/img/ticket-background.png"/>'
+            content: '<img src="js/img/ticket-background.png"/>'
         });
 
         this.ticketBackgroundMod = new StateModifier({
@@ -157,7 +157,7 @@ define(function(require, exports, module) {
 
         this.rightArrow1 = new Surface({
             classes: ["rightArrow1"], 
-            content: '<img width="30" src="src/img/right-arrow-black.png"/>', 
+            content: '<img width="30" src="js/img/right-arrow-black.png"/>', 
             size: [true, true] 
         });
 
@@ -183,7 +183,7 @@ define(function(require, exports, module) {
         this.circles = new Surface({
             classes: ["ticket-circles"], 
             size: [true, true], 
-            content: '<img src="src/img/ticket-circles.png"/>'
+            content: '<img src="js/img/ticket-circles.png"/>'
         });
 
         this.circlesMod = new StateModifier({
@@ -215,7 +215,7 @@ define(function(require, exports, module) {
 
         this.rightArrow2 = new Surface({
             classes: ["rightArrow2"], 
-            content: '<img width="30" src="src/img/right-arrow-black.png"/>', 
+            content: '<img width="30" src="js/img/right-arrow-black.png"/>', 
             size: [true, true]
         });
 
@@ -247,7 +247,7 @@ define(function(require, exports, module) {
 
         this.locationIcon = new Surface({
             classes: ["location-icon"],
-            content: '<img width="30" class="location-icon-pass" src="src/img/location.png"/>',  
+            content: '<img width="30" class="location-icon-pass" src="js/img/location.png"/>',  
             size: [true, true]
         });
 

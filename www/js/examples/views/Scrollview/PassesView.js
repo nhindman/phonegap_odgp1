@@ -87,7 +87,7 @@ define(function(require, exports, module) {
         //creates hamburger icon
         this.hamburgerSurface = new Surface({
           size: [true, true],
-          content: '<img width="20" src="src/img/menu-icon.png"/>'
+          content: '<img width="20" src="js/img/menu-icon.png"/>'
         });
 
         //creates hamburger icon modifier

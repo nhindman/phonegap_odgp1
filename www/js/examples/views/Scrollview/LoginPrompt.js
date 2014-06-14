@@ -100,7 +100,7 @@ define(function(require, exports, module) {
         })
 
         this.closeIcon = new Surface({
-            content: '<img width="33" src="src/img/white-x.png"/>',
+            content: '<img width="33" src="js/img/white-x.png"/>',
             size: [true, true]
         });
 
@@ -177,7 +177,7 @@ define(function(require, exports, module) {
         this.buttonSurface = new Surface({
             size: [this.buttonWidth, this.buttonHeight],
             classes: ["FB-button-surface"],
-            content: ['<div><img class="FB-logo" width="30" src="src/img/FB-logo.png"/>Login With Facebook</div>'].join(''),
+            content: ['<div><img class="FB-logo" width="30" src="js/img/FB-logo.png"/>Login With Facebook</div>'].join(''),
             properties: {
                 backgroundColor: "#3b5998", 
                 borderRadius: "5px", 

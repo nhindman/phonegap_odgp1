@@ -84,7 +84,7 @@ define(function(require, exports, module) {
         this.gymPassIcon = new Surface({
             size: [true, true],
             classes: ["gymPassIcon-confirmPurchase"],
-            content: '<img width="102.5" src="src/img/white_pass.png"/>'
+            content: '<img width="102.5" src="js/img/white_pass.png"/>'
         });
 
         //setting angle for gym pass icon
@@ -161,7 +161,7 @@ define(function(require, exports, module) {
 
         this.plusSquare = new Surface({
             classes: ['this.plusSquare'],
-            content: '<img class="plus-icon" width="17px" src="src/img/plus-sign-white.png"/>',
+            content: '<img class="plus-icon" width="17px" src="js/img/plus-sign-white.png"/>',
             size: [this.passSetter.getSize()[0]/3.5, this.passSetter.getSize()[1]/2.5], 
             properties: {
                 backgroundColor: "purple", 
@@ -176,7 +176,7 @@ define(function(require, exports, module) {
 
         this.minusSquare = new Surface({
             classes: ['this.minusSquare'],
-            content: '<img class="minus-icon" width="11px" src="src/img/minus-sign-white.png"/>',
+            content: '<img class="minus-icon" width="11px" src="js/img/minus-sign-white.png"/>',
             size: [this.passSetter.getSize()[0]/3.5, this.passSetter.getSize()[1]/2.5], 
             properties: {
                 backgroundColor: "purple", 
@@ -305,7 +305,7 @@ define(function(require, exports, module) {
         this.miniPass = new Surface({
             size: [true, true],
             classes: ["mini-pass"],
-            content: '<img class="mini-pass" src="src/img/white_pass.png"/>'
+            content: '<img class="mini-pass" src="js/img/white_pass.png"/>'
         })
 
         this.miniPassMod = new StateModifier({

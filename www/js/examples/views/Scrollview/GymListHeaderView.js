@@ -41,7 +41,7 @@ define(function(require, exports, module) {
       //creates hamburger icon
       this.hamburgerSurface = new Surface({
         size: [true, true],
-        content: '<img width="20" src="src/img/menu-icon.png"/>'
+        content: '<img width="20" src="js/img/menu-icon.png"/>'
       });
 
       //creates hamburger icon modifier
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 
       this.downArrow = new Surface({
         size: [true, true], 
-        content: '<img class="header-down-arrow" width="20" src="src/img/down-arrow.png"/>'
+        content: '<img class="header-down-arrow" width="20" src="js/img/down-arrow.png"/>'
       });
 
       this.arrowModifier = new Modifier({
@@ -76,7 +76,7 @@ define(function(require, exports, module) {
       // adds map icon to header
       this.mapSurface = new Surface({ 
         size: [true, true],
-        content: '<img width="20" src="src/img/map-marker-48.png"/>', 
+        content: '<img width="20" src="js/img/map-marker-48.png"/>', 
         properties: { 
           zIndex: 1000000
         }

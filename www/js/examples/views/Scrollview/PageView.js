@@ -14,7 +14,7 @@ define(function(require, exports, module) {
   var Lightbox = require('famous/views/Lightbox');
   var RenderController = require('famous/views/RenderController');
 
-  var GymData = require('src/examples/data/GymData.js');
+  var GymData = require('examples/data/GymData.js');
 
   var GymListView = require('examples/views/Scrollview/GymListView');
   var GymListSliderView = require('examples/views/Scrollview/GymListSliderView');
