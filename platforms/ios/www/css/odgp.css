@@ -1,0 +1,226 @@
+.plus-icon{
+  margin-top: 11px;
+}
+
+.minus-icon{
+  margin-top: 18px;
+}
+
+.totals_table{
+  margin-left: 10px;
+}
+
+.left-column {
+  padding-left: 5px;
+}
+
+.right-column {
+  padding-left: 30px;
+}
+
+.right-column-rewards {
+  padding-left: 30px;
+}
+
+.mini-pass {
+  height: 20px;
+  width: 20px;
+}
+
+.at-sign {
+  float: right;
+}
+
+.triangle {
+  padding-left: 12px;
+  padding-top: 2px;
+}
+
+.header-down-arrow{
+  padding-bottom: -10px;
+}
+
+.log-in-prompt-line-2{
+  line-height: 18.5px;
+  font-size: 81%;
+  opacity: .48
+}
+
+.log-in-prompt-line-3{
+  line-height: 18.5px;
+  font-size: 81%;
+  opacity: .48
+}
+
+.make-most{
+  line-height: 40px;
+}
+
+.register_using {
+  opacity: .48;
+}
+
+.email {
+  padding-left: 19px;
+}
+
+.already-mem{
+  padding-right: 9px;
+}
+
+.bold-text {
+  padding-left: 2px;
+}
+
+.email-input {
+  height: inherit;
+  float: left !important;
+  border: none !important;
+  margin-left: -11.2px !important;
+}
+
+.password-input {
+  height: inherit;
+  float: left !important;
+  border: none !important;
+  margin-left: -11.2px !important;
+}
+
+.expire-input {
+  height: inherit;
+  float: left !important;
+  border: none !important;
+  margin-left: -11.2px !important;
+}
+
+.cvv-input {
+  height: inherit;
+  float: left !important;
+  border: none !important;
+  margin-left: -11.2px !important;
+}
+
+.zipcode-input {
+  height: inherit;
+  float: left !important;
+  border: none !important;
+  margin-left: -11.2px !important;
+}
+
+.gym-detail1{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 4px #bdc3c7 solid;
+    /*box-shadow: 3px #888888 !important;*/
+    font-size: "81%" !important;
+}
+
+.map-header {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: "81%" !important;
+}
+
+.gym-name-on-ticket{
+  color: black !important;
+  font-size: 1.75em !important;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.pass-text-ticket{
+  color: black !important;
+  font-size: 1em !important;
+  text-align: center; 
+  margin-top: 5px;
+}
+
+/*.swimming-icon {
+  margin-left: 15px;
+  padding-bottom: 7px;
+}*/
+
+#map-wrapper {
+    
+}
+
+.map-footer {
+  margin-top: -8px;
+  border-bottom: 4px #bdc3c7 solid;
+}
+
+.hours {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  /*border-top: 10px rgba(233,233,233,1) solid;*/
+  border-bottom: 4px #bdc3c7 solid;
+}
+
+.hours-today {
+  padding-left: 20px;
+}
+
+.how-to-get-in {
+  line-height: 18px;
+}
+
+.total-passes {
+  display: none;
+}
+
+.total-price-pass{
+  float: right;
+}
+
+.gym-name-pass{
+  padding-bottom: 80px;
+  padding-top: 20px;
+  padding-left: 40px;
+}
+
+.pass-amount-pass {
+  float: right;
+}
+
+.distance-slideview {
+
+}
+
+input.email-input {
+  font-size: 85% !important;
+}
+
+input.password-input {
+  font-size: 85% !important;
+}
+
+input.expire-input {
+  font-size: 85% !important;
+}
+
+input.cvv-input {
+  font-size: 85% !important;
+}
+
+input.zipcode-input {
+  font-size: 85% !important;
+}
+
+.country {
+  font-size: 85% !important;
+}
+
+.FB-logo {
+  position: relative;
+  top: 5px;
+  margin-right: 7px;
+  margin-top: 4px;
+}
+
+/*.payment-success-mg {
+  opacity: 1;
+}*/
