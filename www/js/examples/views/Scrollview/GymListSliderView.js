@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var StateModifier = require('famous/modifiers/StateModifier');
     var ViewSwapper = require('famous/views/Lightbox');
     var Scrollview = require("famous/views/Scrollview");
-    var GymData = require('examples/data/GymData.js');
+    var GymData = require('examples/data/GymData');
     var Easing = require('famous/transitions/Easing');
     var EventHandler = require('famous/core/EventHandler');
     var GenericSync         = require('famous/inputs/GenericSync');

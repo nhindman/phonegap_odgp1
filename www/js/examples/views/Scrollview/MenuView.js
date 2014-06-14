@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     var PassesStripView = require('examples/views/Scrollview/PassesStripView');
     var FeaturedView    = require('examples/views/Scrollview/FeaturedView');
     var TicketView      = require('examples/views/Scrollview/TicketView');
-    var StripData       = require('examples/data/StripData.js');
+    var StripData       = require('examples/data/StripData');
 
 
     function MenuView() {
@@ -46,7 +46,7 @@ define(function(require, exports, module) {
 
         this.gymStripView = new GymStripView({
             classes: ["gym-strip-view"],
-            iconUrl: 'src/img/dumbell5.png',
+            iconUrl: 'js/img/dumbell5.png',
             title: 'gyms'
         });
 
@@ -64,7 +64,7 @@ define(function(require, exports, module) {
 
         this.passesStripView = new PassesStripView({
             classes: ["passes-strip-view"],
-            iconUrl: 'src/img/passes.png',
+            iconUrl: 'js/img/passes.png',
             title: 'passes'
         });
 

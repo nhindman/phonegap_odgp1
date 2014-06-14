@@ -335,17 +335,17 @@ define(function(require, exports, module) {
         //add input listeners 
         this.email.on('keyup', function(e){
             if(/^[a-zA-Z_][a-zA-Z0-9._\-+]*@([a-zA-Z0-9_\-]+.)+[a-zA-Z]+$/.test(this.getValue())){
-                $('.email-validation-ind img').attr('src', 'src/img/check-mark.png');
+                $('.email-validation-ind img').attr('src', 'js/img/check-mark.png');
             }else{
-                $('.email-validation-ind img').attr('src', 'src/img/red-x.png');
+                $('.email-validation-ind img').attr('src', 'js/img/red-x.png');
             }
         });
 
         this.password.on('keyup', function(e){
             if(this.getValue().length>5){
-                $('.password-validation-ind img').attr('src', 'src/img/check-mark.png');
+                $('.password-validation-ind img').attr('src', 'js/img/check-mark.png');
             }else{
-                $('.password-validation-ind img').attr('src', 'src/img/red-x.png');
+                $('.password-validation-ind img').attr('src', 'js/img/red-x.png');
             }
         });
 

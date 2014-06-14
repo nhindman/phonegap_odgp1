@@ -23,7 +23,7 @@ define(function(require, exports, module) {
         height: 55,
         angle: -0.2,
         iconSize: 32,
-        iconUrl: 'src/img/friends.png',
+        iconUrl: 'js/img/friends.png',
         title: 'Famo.us',
         fontSize: 26
     };

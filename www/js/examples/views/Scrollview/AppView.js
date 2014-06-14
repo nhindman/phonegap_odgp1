@@ -14,8 +14,8 @@ define(function(require, exports, module) {
   var Easing          = require('famous/transitions/Easing');
 
   var PageView        = require('examples/views/Scrollview/PageView');
-  var GymData         = require('examples/data/GymData.js');
-  var StripData       = require('examples/data/StripData.js');
+  var GymData         = require('examples/data/GymData');
+  var StripData       = require('examples/data/StripData');
   var MenuView        = require('examples/views/Scrollview/MenuView');
 
   // var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {

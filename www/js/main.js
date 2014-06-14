@@ -51,9 +51,9 @@ var app = {
 app.initialize();
 
 define(function(require, exports, module) {
-  var AppView = require('examples/views/Scrollview/AppView.js');
+  var AppView = require('examples/views/Scrollview/AppView');
   var Engine = require('famous/core/Engine');
-  var GymData = require('examples/data/GymData.js');
+  var GymData = require('examples/data/GymData');
   var Modifier = require('famous/core/Modifier');
   var Surface = require('famous/core/Surface');
   var EventHandler = require('famous/core/EventHandler');

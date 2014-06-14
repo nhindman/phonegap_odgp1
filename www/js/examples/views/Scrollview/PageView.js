@@ -14,7 +14,7 @@ define(function(require, exports, module) {
   var Lightbox = require('famous/views/Lightbox');
   var RenderController = require('famous/views/RenderController');
 
-  var GymData = require('examples/data/GymData.js');
+  var GymData = require('examples/data/GymData');
 
   var GymListView = require('examples/views/Scrollview/GymListView');
   var GymListSliderView = require('examples/views/Scrollview/GymListSliderView');
@@ -42,7 +42,7 @@ define(function(require, exports, module) {
     // Bon: create a mask.
     _createMask.call(this);
 
-    //loads gym data from GymData.js and creates instance of GymListView
+    //loads gym data from GymData and creates instance of GymListView
     _createGymListView.call(this);
 
     //creates Grey slider thingy
