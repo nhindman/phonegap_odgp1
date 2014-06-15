@@ -177,7 +177,7 @@ define(function(require, exports, module) {
         this.buttonSurface = new Surface({
             size: [this.buttonWidth, this.buttonHeight],
             classes: ["FB-button-surface"],
-            content: ['<div><img class="FB-logo" width="30" src="js/img/FB-logo.png"/>Login With Facebook</div>'].join(''),
+            content: '<div><img class="FB-logo" width="30" src="js/img/FB-logo.png"/>Login With Facebook</div>',
             properties: {
                 backgroundColor: "#3b5998", 
                 borderRadius: "5px", 
@@ -195,10 +195,21 @@ define(function(require, exports, module) {
         });
 
         this.buttonSurface.on('click', function() {
-            FirebaseRef.auth.login('facebook', {
+            FB.login(function(response) {
+                if (response.session) {
+                alert('logged in');
+            } else {
+                alert('not logged in');
+            }}, { scope: "email" });
+            /*FirebaseRef.auth.login('facebook', {
                 rememberMe: true,
                 scope: 'email,user_likes'
             });
+*/
+            var self = this;
+            //check if FB userid exists in DB and if it does fire mypass and if it doesn't
+            //fire credit card view
+
         });
 
         this.separator = new Surface({

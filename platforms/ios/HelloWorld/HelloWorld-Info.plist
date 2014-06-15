@@ -59,7 +59,7 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>1.0</string>
+    <string>1.0.0</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSMainNibFile</key>
@@ -79,5 +79,24 @@
     </array>
     <key>CFBundleShortVersionString</key>
     <string>1.0.0</string>
+    <key>FacebookAppID</key>
+    <string>1427086374232506</string>
+    <key>FacebookDisplayName</key>
+    <string>One Day Gym Pass</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb1427086374232506</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb1427086374232506</string>
+        </array>
+      </dict>
+    </array>
   </dict>
 </plist>
