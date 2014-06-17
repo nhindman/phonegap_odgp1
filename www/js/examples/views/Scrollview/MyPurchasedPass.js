@@ -291,7 +291,7 @@ define(function(require, exports, module) {
             this.buttonSurface.setContent("<div>Pass Activated</div>");
             this.buttonSurface.setProperties({ 'backgroundColor': 'green' });
             this.buttonSurface.setProperties({ 'color': 'black' });
-            debugger;
+            // debugger;
             FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.data.passId).update({activated: true});
         }.bind(this));
 
