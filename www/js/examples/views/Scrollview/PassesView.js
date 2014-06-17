@@ -135,7 +135,15 @@ define(function(require, exports, module) {
         this.passScrollView.sequenceFrom(this.surfaces);
 
         //push pass objects into an array
-        FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).limit(100).on('child_added', function(snapshot) {this.addPassesItem(snapshot.val())}.bind(this));
+        FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).limit(100).on('child_added', function(snapshot) {
+          var passView = this.addPassesItem(snapshot.val(), snapshot.name());
+
+          FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(snapshot.name()).on('child_changed', function(snapshot){
+            passView.activate();
+
+          });
+          
+        }.bind(this));
 
         //loop that calls each panel of passScrollView
 
@@ -153,14 +161,20 @@ define(function(require, exports, module) {
           }.bind(this))
       }
 
-    PassesView.prototype.addPassesItem = function(item){
+    PassesView.prototype.addPassesItem = function(item, passId){
+        // debugger;
         var passView = new PurchasedPassView({
             gymName: item.gymName,
             numDays: item.numDays,
             price: item.price,
             numPasses: item.numPasses,
-            userID: item.userID
+            userID: item.userID,
+            activated: item.activated,
+            passId: passId
         });
+        // passesRef.on('child_changed', function(snapshot){
+        //   passView.activated = snapshot.val().activated;
+        // });
 
         this._eventInput.pipe(passView);
 
@@ -169,6 +183,8 @@ define(function(require, exports, module) {
         passView.pipe(this._eventOutput); // dragging
 
         this.surfaces.push(passView);
+
+        return passView;
     };
 
 

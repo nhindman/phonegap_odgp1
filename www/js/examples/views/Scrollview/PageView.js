@@ -195,6 +195,7 @@ define(function(require, exports, module) {
     }
 
     PageView.prototype.showMyPurchasedPass = function(data){
+        debugger;
         if (!this.myPurchasedPass){
             this.myPurchasedPass = new MyPurchasedPass({
                 data: data

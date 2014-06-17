@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 
     MyPass.DEFAULT_OPTIONS = {
         size: [windowWidth, undefined],
-        data: undefined, 
+        data: undefined,
         headerSize: 55,
         posThreshold: window.innerHeight/2.2,
         velThreshold: 0.75,
@@ -319,9 +319,11 @@ define(function(require, exports, module) {
         this.buttonSurface.on('click', function(e) {
             if(e.detail != null) return false;  
             console.log('use pass clicked');
+            console.log(this.options.passId);
             this.buttonSurface.setContent("<div>Pass Activated</div>");
             this.buttonSurface.setProperties({ 'backgroundColor': 'green' });
             this.buttonSurface.setProperties({ 'color': 'black' });
+            FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId).update({activated: true});
         }.bind(this));
 
         this.buttonMod = new Modifier({

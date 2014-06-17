@@ -71,13 +71,19 @@ define(function(require, exports, module) {
 
         this.isPiping = false;
         this.onPipeEventOutput();
+
+        var self = this;
+        if (this.options.activated) { 
+          self.activate();
+        }
+
     }
 
     PurchasedPassView.prototype = Object.create(View.prototype);
     PurchasedPassView.prototype.constructor = PurchasedPassView;
 
     PurchasedPassView.DEFAULT_OPTIONS = {
-     
+      data: undefined
     };
 
     function _setListeners() {
@@ -91,6 +97,11 @@ define(function(require, exports, module) {
       this._eventInput.on('unPipeEventOutput',this.onUnPipeEventOutput.bind(this));
 
     }
+
+    PurchasedPassView.prototype.activate = function() {
+      this.options.activated = true;
+      this.gymName.setProperties({ 'color': 'red' });
+    };
 
     PurchasedPassView.prototype.onPipeEventOutput = function(){
         if (this.isPiping == true) return;

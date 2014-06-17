@@ -9,6 +9,8 @@ define(function(require, exports, module) {
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
 
+    var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
+
     function MyPurchasedPass(options, data) {
         View.apply(this, arguments);
         _createLayout.call(this);
@@ -281,6 +283,17 @@ define(function(require, exports, module) {
                 lineHeight: this.buttonHeight +'px'
             }
         });
+
+        this.buttonSurface.on('click', function(e) {
+            if(e.detail != null) return false;  
+            console.log('use pass clicked');
+            console.log(this.options.data.passId);
+            this.buttonSurface.setContent("<div>Pass Activated</div>");
+            this.buttonSurface.setProperties({ 'backgroundColor': 'green' });
+            this.buttonSurface.setProperties({ 'color': 'black' });
+            debugger;
+            FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.data.passId).update({activated: true});
+        }.bind(this));
 
         this.buttonMod = new Modifier({
             origin: [0.5, 0.7],

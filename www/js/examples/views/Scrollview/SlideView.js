@@ -1,5 +1,6 @@
 var BASE_URL = 'https://burning-fire-4148.firebaseio.com';
 var chatRef = new Firebase(BASE_URL);
+var passesRef = new Firebase(BASE_URL + '/passes');
 
 define(function(require, exports, module) {
     var Surface = require("famous/core/Surface");
@@ -630,20 +631,26 @@ define(function(require, exports, module) {
 
   SlideView.prototype.createPass = function(data){
     if (this.passView) return;
+    var passes = chatRef.child('passes').child(FirebaseRef.user.id);
+    var dataFirebase = {
+      userID: FirebaseRef.user.id, 
+      gymName: $(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '), 
+      price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
+      numDays: window.gymDays, 
+      activated: false
+    };
+    var id = passes.push().name();
+    // dataFirebase.id = id;
+    passes.child(id).set(dataFirebase);
+  
     this.passView = new MyPass({
-      data: this.options.data
+      data: this.options.data,
+      passId: id
     });
     this.passViewMod = new StateModifier({
       transform: Transform.translate(0,-window.innerHeight,500)
     });
-    var passes = chatRef.child('passes').child(FirebaseRef.user.id);
-    passes.push({
-      userID: FirebaseRef.user.id, 
-      gymName: $(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '), 
-      price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
-      numDays: window.gymDays
-    });
-    
+
     // this line will return all the passes for a certain user
     // FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).limit(100).on('child_added', function(snapshot) {console.log(snapshot.val())})
 
