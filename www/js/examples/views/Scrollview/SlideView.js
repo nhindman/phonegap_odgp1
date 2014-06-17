@@ -369,7 +369,7 @@ define(function(require, exports, module) {
         if (this.confirmPurchase) {
             //if user is logged in create mypass when confirm purchase is clicked
             if(FirebaseRef.user){
-              console.log("NEWLY REGISTERED USER PURCHASES PASSES");
+              console.log("REGISTERED USER PURCHASES PASSES");
               this.createPass();
               this.passMoveIn();
               // return;
@@ -643,13 +643,9 @@ define(function(require, exports, module) {
       price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
       numDays: window.gymDays
     });
-    // console.log("PASS DATA FROM SLIDEVIEW",this.options.data);
-    // console.log("HERE'S THE USER IN SLIDEVIEW",FirebaseRef.user);
-    // console.log("HERE'S THE USERID IN SLIDEVIEW",FirebaseRef.user.id)
     
     // this line will return all the passes for a certain user
     // FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).limit(100).on('child_added', function(snapshot) {console.log(snapshot.val())})
-
 
     this.add(this.passViewMod).add(this.passView);
     this.passView.pipe(this._eventOutput);

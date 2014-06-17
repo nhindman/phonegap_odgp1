@@ -315,6 +315,15 @@ define(function(require, exports, module) {
             }
         });
 
+        //use pass button click
+        this.buttonSurface.on('click', function(e) {
+            if(e.detail != null) return false;  
+            console.log('use pass clicked');
+            this.buttonSurface.setContent("<div>Pass Activated</div>");
+            this.buttonSurface.setProperties({ 'backgroundColor': 'green' });
+            this.buttonSurface.setProperties({ 'color': 'black' });
+        }.bind(this));
+
         this.buttonMod = new Modifier({
             origin: [0.5, 0.7],
             transform: Transform.translate(0, 0, 55)
