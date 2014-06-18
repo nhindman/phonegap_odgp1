@@ -46,6 +46,7 @@
 		22DFC05D0049478CAFC31B59 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9F42D79F8C431FBFCCC655 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F57CE497BFDD458F9CF5E3DE /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E62F897D36A42CFA96809CC /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		19DB464183024212BBCD6B78 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B6359805714EB8AC36CA3C /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7A38752D5425414BAAB7C890 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB2900C4D1C4DA3BF897F70 /* CDVLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,8 @@
 		9F9F42D79F8C431FBFCCC655 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Accounts.framework"; path = "System/Library/Frameworks/Accounts.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		6E62F897D36A42CFA96809CC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AdSupport.framework"; path = "System/Library/Frameworks/AdSupport.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		84B6359805714EB8AC36CA3C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		5AB2900C4D1C4DA3BF897F70 /* CDVLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLocation.m"; path = "org.apache.cordova.geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		574CB3DAD10D4C78815BDA46 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "org.apache.cordova.geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +250,8 @@
 			children = (
 				9B51C760F35B4BC3A1CA3FCD /* FacebookConnectPlugin.m */,
 				C7D2544825A040CF92657541 /* FacebookConnectPlugin.h */,
+				5AB2900C4D1C4DA3BF897F70 /* CDVLocation.m */,
+				574CB3DAD10D4C78815BDA46 /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = "HelloWorld/Plugins";
@@ -433,6 +438,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				41066207733A4B399264372F /* FacebookConnectPlugin.m in Sources */,
+				7A38752D5425414BAAB7C890 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

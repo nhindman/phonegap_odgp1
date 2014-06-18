@@ -64,6 +64,7 @@ define(function(require, exports, module) {
   initApp(GymData());
 
   function initApp(data) {
+    
     data = GymData();
 
     var options = {

@@ -18,6 +18,17 @@ define(function(require, exports, module) {
         _createBody.call(this);
         _createListeners.call(this);
         this.setContents(this.options.data);
+
+        //this will change button to red if pass has been activated
+        var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.data.passId);
+        var self = this;
+        pass.on('child_changed', function(snapshot){
+            if (snapshot.name() === "activated" && snapshot.val() === true)
+              self.activate();
+          });
+        if (this.options.data.activated) { 
+          this.activate();
+        };
     }
 
     MyPurchasedPass.prototype = Object.create(View.prototype);
@@ -228,9 +239,6 @@ define(function(require, exports, module) {
 
         this.locationHeight = window.innerHeight/7;
 
-        // var theGym = this.options.data.gymName.content.html();
-        // debugger
-        // var theGym = this.options.data.gymName.content.html();
         this.locationSurface = new Surface({
             classes: ["location-surface"], 
             size: [286, this.locationHeight],
@@ -269,7 +277,7 @@ define(function(require, exports, module) {
         //#######-- use pass button --#######
         this.buttonWidth = window.innerWidth - (window.innerWidth/5);
         this.buttonHeight = window.innerHeight/12;
-
+        
         this.buttonSurface = new Surface({
             size: [this.buttonWidth, this.buttonHeight],
             classes: ["use-pass-surface"],
@@ -338,6 +346,10 @@ define(function(require, exports, module) {
             //change languge on button to 'pass used'   
         }.bind(this));
 
+        //if pass activated change button content
+        if (this.options.activated) { 
+          self.activate();
+        }
 
 
         this.bodyBackground.add(this.ticketBackgroundMod).add(this.ticketBackground);
@@ -355,6 +367,13 @@ define(function(require, exports, module) {
     function _createListeners() {
 
     }
+
+    MyPurchasedPass.prototype.activate = function() {
+      this.options.activated = true;
+      this.buttonSurface.setContent("<div>Pass Activated</div>");
+      this.buttonSurface.setProperties({ 'backgroundColor': 'red' });
+      this.buttonSurface.setProperties({ 'color': 'black' });
+    };
 
     MyPurchasedPass.prototype.setContents = function(data){
         this.passOrPasses = null;

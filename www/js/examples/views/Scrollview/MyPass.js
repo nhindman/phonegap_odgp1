@@ -21,6 +21,18 @@ define(function(require, exports, module) {
         _createHeader.call(this);
         _createBody.call(this);
         _createListeners.call(this);
+        debugger;
+        //this will change button to red if pass has been activated
+        var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
+        var self = this;
+        pass.on('child_changed', function(snapshot){
+            debugger;
+            if (snapshot.name() === "activated" && snapshot.val() === true)
+              self.activate();
+          });
+        if (this.options.activated) {
+          this.activate();
+        };
     }
 
     MyPass.prototype = Object.create(View.prototype);
@@ -388,6 +400,13 @@ define(function(require, exports, module) {
     function _createListeners() {
 
     }
+
+   MyPass.prototype.activate = function() {
+      this.options.activated = true;
+      this.buttonSurface.setContent("<div>Pass Activated</div>");
+      this.buttonSurface.setProperties({ 'backgroundColor': 'red' });
+      this.buttonSurface.setProperties({ 'color': 'black' });
+    }; 
 
    MyPass.prototype.moveUp = function(){
         this.layoutModifier.setTransform(

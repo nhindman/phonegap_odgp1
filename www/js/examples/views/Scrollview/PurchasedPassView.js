@@ -72,6 +72,7 @@ define(function(require, exports, module) {
         this.isPiping = false;
         this.onPipeEventOutput();
 
+        //checks if pass has been activated. fires activate function
         var self = this;
         if (this.options.activated) { 
           self.activate();

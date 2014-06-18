@@ -139,8 +139,9 @@ define(function(require, exports, module) {
           var passView = this.addPassesItem(snapshot.val(), snapshot.name());
 
           FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(snapshot.name()).on('child_changed', function(snapshot){
-            passView.activate();
-
+            if (snapshot.name() === "activated" && snapshot.val() === true) {
+              passView.activate();
+            }
           });
           
         }.bind(this));
