@@ -1,1 +1,5 @@
 platforms/ios/www/*
+.idea/*
+.git/*
+.gitignore/*
+.DS_Store/*

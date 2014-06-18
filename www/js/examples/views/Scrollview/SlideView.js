@@ -334,7 +334,10 @@ define(function(require, exports, module) {
     this.gymPassContainer.add(this.gymPriceModifier).add(this.gymPriceSurface);
 
     this._createDetailView();
-
+    _.each(this.surfaces,function(photoSurface){
+        photoSurface.pipe(this.detailScrollview);
+        photoSurface.pipe(this.sync);
+    }.bind(this));
   }
 
   //############## -- END OF BODY -- #######################
@@ -451,6 +454,7 @@ define(function(require, exports, module) {
   //#### -- ADD PHOTOS TO GYMPHOTO SCROLLVIEW --- #####
   SlideView.prototype.addPhotoSurface = function(content){
       var photoSurface = new Surface({
+        size:[undefined,thirdWindowHeight],
         content: content
       });
       photoSurface.pipe(this.gymPhotos); // scrolling
@@ -468,6 +472,8 @@ define(function(require, exports, module) {
         clipSize: 15 + window.innerHeight - this.options.headerSize - this.options.footerSize - (thirdWindowHeight+2*gymDetailItemHeight),
         direction:1 // 1 means Y direction
     });
+    this.gymNameSurface.pipe(this.detailScrollview);
+    this.gymPassContainer.pipe(this.detailScrollview);
 
     this.detailScrollviewPos = new Transitionable(thirdWindowHeight+2*gymDetailItemHeight);
 
@@ -481,13 +487,16 @@ define(function(require, exports, module) {
 
     this.detailSequence = [];
 
+    this.triangleNode = new RenderNode();
     this.triangle = new Surface({
       size: [15, 15],
       classes: ["triangle"],
       content: '<img width="20" src="js/img/gray-triangle.png"/>'
     });
+    this.triangleMod = new StateModifier();
+    this.triangleNode.add(this.triangleMod).add(this.triangle);
 
-    this.detailSequence.push(this.triangle);
+    this.detailSequence.push(this.triangleNode);
     this.addOneDetailSurface([window.innerWidth,true],['<div style="background-color: rgb(236, 240, 241); height: 100%; font-size: 81%" class="hours"><span class="hours-today">Hours Today: 6:00 AM - 10:00PM</span>','<span style="float: right; color: green" class="open-or-closed">Open</span></div>'].join(''));
     // this.addOneDetailSurface([window.innerWidth,true],'<div style="background-color: #CFCFCF; height: 100%; font-size: 81%; box-shadow: rgba(0,0,0,.2); font-weight: bold"><div class="gym-detail1"><img src="js/img/black-dumbell.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="js/img/swimming.png"/><img style="padding-bottom: 7px; float: right" class="swimming-con" width="50" src="js/img/sauna.png"/></div>');
     this.addOneDetailSurface([window.innerWidth,true],'<div style="background-color: rgb(236, 240, 241); height: 100%; font-size: 81%; box-shadow: rgba(0,0,0,.2); font-weight: bold" class="gym-detail1">A no-B.S. weightlifters gym with loads of space and a friendly staff.</div>');
@@ -523,6 +532,7 @@ define(function(require, exports, module) {
       );
       this.sync.on('start', function(data) {
         this.startPos = data.clientY;
+        this.triangleMod.setOpacity(0, {duration:500});
       }.bind(this));
 
 
@@ -535,6 +545,9 @@ define(function(require, exports, module) {
           // at the end of the drag event, the scrollview either go to the top or bottom of the layout.content
           var velocity = data.velocity;
           var position = data.clientY;
+          if (this.detailScrollview.getPosition() == 0){
+              this.triangleMod.setOpacity(1, {duration:300});
+          }
           if(position > this.options.posThreshold) {
               if(velocity < -this.options.velThreshold) {
                   this.stopScrolling(velocity);
@@ -611,6 +624,8 @@ define(function(require, exports, module) {
       };
       detailSurface.pipe(this.detailScrollview);  // pipe the detail surface to scrollview
       detailSurface.pipe(this.sync);   // make detail surface become draggable. In fact we are move the entire scrollview.
+      this.gymNameSurface.pipe(this.sync);   // make detail surface become draggable. In fact we are move the entire scrollview.
+      this.gymPassContainer.pipe(this.sync);   // make detail surface become draggable. In fact we are move the entire scrollview.
       this.detailSequence.push(detailSurface);  // the push method is pushing surface to detailScrollvew.
   };
 
@@ -692,6 +707,7 @@ define(function(require, exports, module) {
           this.detailScrollview._eventInput.emit('end',{velocity: 3});
         }.bind(this),270)
       }
+      this.triangleMod.setOpacity(1, {duration:500});
   };
 
   SlideView.prototype.stopScrolling = function(v){
