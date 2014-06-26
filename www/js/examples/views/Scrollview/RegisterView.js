@@ -12,6 +12,7 @@ define(function(require, exports, module) {
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     var InputSurface = require('famous/surfaces/InputSurface');
+    var MyPass = require('examples/views/Scrollview/MyPass');
 
     var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
 
@@ -281,14 +282,15 @@ define(function(require, exports, module) {
             if(e.detail != null) return false;
             
 
-            var email = $('.email-input').val();
-            var password = $('.password-input').val();
+            email = $('.email-input').val();
+            password = $('.password-input').val();
 
             FirebaseRef.auth.createUser(email, password, function(error, user) {  
               console.log("logging new registered user");
               if(error){
                 console.log('error creating user', error);
               } else if (user){
+                console.log("add listener");
                 var users = chatRef.child('users');
                 users.set({
                     email: email,
@@ -308,6 +310,20 @@ define(function(require, exports, module) {
                     password: password    
                 });
                 self._eventOutput.emit('validated user from register');
+
+                FirebaseRef.ready = function(success){
+                    if(success){
+                        //login success
+                        console.log("add listener");
+                        // debugger;
+                        chatRef.child('passes/'+FirebaseRef.user.id).on('child_added', MyPass.onPassCreate);
+                        console.log("user exists");
+                        // self._eventOutput.emit('validated user from welcome back');
+                    }else{
+                        //login failed
+                        console.log("user not valid")
+                    }
+                }
             };
 
         }.bind(this));

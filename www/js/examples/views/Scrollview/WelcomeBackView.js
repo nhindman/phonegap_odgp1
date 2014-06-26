@@ -9,6 +9,7 @@ define(function(require, exports, module) {
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     var InputSurface = require('famous/surfaces/InputSurface');
+    var MyPass = require('examples/views/Scrollview/MyPass');
 
     var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
 
@@ -276,8 +277,8 @@ define(function(require, exports, module) {
         //click on sign-in button
         this.buttonSurface.on('click', function(){
             console.log("user clicks register button");
-            var email = $('.email-input').val();
-            var password = $('.password-input').val();
+            email = $('.email-input').val();
+            password = $('.password-input').val();
 
             FirebaseRef.auth.login('password', {
                 email: email, 
@@ -288,6 +289,9 @@ define(function(require, exports, module) {
             FirebaseRef.ready = function(success){
                 if(success){
                     //login success
+                    console.log("add listener");
+                    // debugger;
+                    chatRef.child('passes/'+FirebaseRef.user.id).on('child_added', MyPass.onPassCreate);
                     console.log("user exists");
                     self._eventOutput.emit('validated user from welcome back');
                 }else{

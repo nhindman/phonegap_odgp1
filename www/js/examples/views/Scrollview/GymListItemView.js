@@ -107,7 +107,7 @@ define(function(require, exports, module) {
     //this function listens for clicks on the slider (specifies reaction for 1day, 4day or 1month)
     function _setListeners() {
       this.on('click', function() {
-        console.log(this.gymName.content)
+        console.log('HERE!', this.gymName.content)
         this._eventOutput.emit('showDetails', {data: this.gymName.content});
       });
 

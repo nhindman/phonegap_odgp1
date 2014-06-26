@@ -93,6 +93,14 @@
   margin-left: -11.2px !important;
 }
 
+.expireYear-input {
+  height: inherit;
+  width: 80px !important;
+  float: left !important;
+  border: none !important;
+  margin-left: -31.2px !important;
+}
+
 .cvv-input {
   height: inherit;
   float: left !important;

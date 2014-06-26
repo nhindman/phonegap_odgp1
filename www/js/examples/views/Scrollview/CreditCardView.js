@@ -10,6 +10,7 @@ define(function(require, exports, module) {
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     var ModifierChain = require('famous/modifiers/ModifierChain')
+    var MyPass = require('examples/views/Scrollview/MyPass');
 
     
     function CreditCardView(options, data) {
@@ -126,6 +127,46 @@ define(function(require, exports, module) {
         
         //click on OK creates new pass and redirects to MyPass
         this.OK.on('click', function(){
+            console.log(this.options)
+
+        //xml post request to send CC data to Braintree server
+            var priceOption;
+            switch(window.gymDays){
+                case '1-Month':
+                priceOption=2;
+                break;
+                case '4-Day':
+                priceOption=1;
+                break;
+                default:
+                priceOption=0;
+                break;
+            }
+            var http = new XMLHttpRequest();
+            var url = "http://localhost:8001/"+encodeURIComponent(this.options.data.gymName.getContent().replace(/<[^>]*>(.*)<[^>]*>/, '$1'));
+            var params = [
+                'price='+priceOption
+            ];
+            params.push("ccName="+encodeURIComponent($('input[name=cc-name]').val()));
+            params.push("ccNumber="+encodeURIComponent($('input[name=cc-number]').val()));
+            params.push("ccExpireMonth="+encodeURIComponent($('input[name=cc-expireMonth]').val()));
+            params.push("ccExpireYear="+encodeURIComponent($('input[name=cc-expireYear]').val()));
+            params.push("ccCVV="+encodeURIComponent($('input[name=cc-CVV]').val()));
+            params.push("ccZip="+encodeURIComponent($('input[name=cc-zip]').val()));
+            params.push("authToken="+encodeURIComponent(user.firebaseAuthToken));
+
+            http.open("POST", url, true);
+            //Send the proper header information along with the request
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            http.onreadystatechange = function() {//Call a function when the state changes.
+                if(http.readyState == 4 && http.status == 200) {
+                    //alert(http.responseText);
+                }
+            }
+            http.send(params.join('&'));
+            MyPass.CreditCardView = this;
+            return;
             console.log("OK clicked");
             this.paymentSuccess();
             Timer.setTimeout(function(){
@@ -188,7 +229,7 @@ define(function(require, exports, module) {
         var inputwidth = window.innerWidth/1.2
         this.cardName = new Surface({
             classes: ["card-name"],
-            content: '<input class="email-input" placeholder="Card Holders Name"></input>', 
+            content: '<input class="email-input" name="cc-name" placeholder="Card Holders Name"></input>', 
             size: [inputwidth, rectangleHeight/4.1], 
             properties: {
                 backgroundColor: "white", 
@@ -256,7 +297,7 @@ define(function(require, exports, module) {
 
         this.cardNumber = new Surface({
             classes: ["card-number"],
-            content: '<input class="password-input" placeholder="Credit Card Number"></input>',
+            content: '<input class="password-input" name="cc-number" data-encrypted-name="number" placeholder="Credit Card Number"></input>',
             size: [inputwidth, rectangleHeight/2.8], 
             properties: {
                 backgroundColor: "white", 
@@ -270,10 +311,10 @@ define(function(require, exports, module) {
             origin: [.38, .325]
         });
 
-        this.expireLine = new Surface({
-            classes: ["expire"],
-            content: '<input class="expire-input" placeholder="Expires mm/yy"></input>',
-            size: [inputwidth/8, rectangleHeight/4.5], 
+        this.expireMonthLine = new Surface({
+            classes: ["expire-month"],
+            content: '<input class="expire-input" name="cc-expireMonth" data-encrypted-name="month" placeholder="Expires mm"></input>',
+            size: [inputwidth/10, rectangleHeight/4.5], 
             properties: {
                 backgroundColor: "white", 
                 color: "black", 
@@ -281,14 +322,30 @@ define(function(require, exports, module) {
             }
         });
 
-        this.expireLineMod = new Modifier({
+        this.expireMonthLineMod = new Modifier({
             transform: Transform.translate(0,0,100000), 
             origin: [.07, .68]
         });
 
+        this.expireYearLine = new Surface({
+            classes: ["expire-year"],
+            content: '<input class="expireYear-input" name="cc-expireYear" data-encrypted-name="year" placeholder="/yyyy"></input>',
+            size: [inputwidth/20, rectangleHeight/4.5], 
+            properties: {
+                backgroundColor: "white", 
+                color: "black", 
+                textAlign: "left"
+            }
+        });
+
+        this.expireYearLineMod = new Modifier({
+            transform: Transform.translate(0,0,100000), 
+            origin: [.365, .68]
+        });
+
         this.cvvLine = new Surface({
             classes: ["cvv"],
-            content: '<input class="cvv-input" placeholder="CVV"></input>',
+            content: '<input class="cvv-input" name="cc-CVV" data-encrypted-name="cvv" placeholder="CVV"></input>',
             size: [inputwidth/4, rectangleHeight/4.5], 
             properties: {
                 backgroundColor: "white", 
@@ -320,7 +377,7 @@ define(function(require, exports, module) {
 
         this.zipLine = new Surface({
             classes: ["zipcode"],
-            content: '<input class="zipcode-input" placeholder="Zip Code"></input>',
+            content: '<input class="zipcode-input" name="cc-zip" placeholder="Zip Code"></input>',
             size: [inputwidth/3, rectangleHeight/4.7], 
             properties: {
                 backgroundColor: "white", 
@@ -486,7 +543,8 @@ define(function(require, exports, module) {
         this.rectangle.add(this.separator2Mod).add(this.separator2);
         this.rectangle.add(this.separator3Mod).add(this.separator3);
         this.rectangle.add(this.cardNumberMod).add(this.cardNumber);
-        this.rectangle.add(this.expireLineMod).add(this.expireLine);
+        this.rectangle.add(this.expireMonthLineMod).add(this.expireMonthLine);
+        this.rectangle.add(this.expireYearLineMod).add(this.expireYearLine);
         this.rectangle.add(this.cvvLineMod).add(this.cvvLine);
         this.rectangle.add(this.countryLineMod).add(this.countryLine);
         this.rectangle.add(this.zipLineMod).add(this.zipLine);
@@ -530,6 +588,7 @@ define(function(require, exports, module) {
 
     //creates pay success module when OK is clicked
    CreditCardView.prototype.paymentSuccess = function() {
+    console.log("paymentsuccess fired from cc view");
     window.TT = Transform;
     var paymentSuccessWidth = window.innerWidth/2.5;
     var paymentSuccessHeight = window.innerHeight/3.6;
@@ -568,6 +627,7 @@ define(function(require, exports, module) {
     };
 
     CreditCardView.prototype.moveDown = function(){
+        console.log("movedown fires")
         this.layoutModifier.setTransform(
             Transform.translate(0, window.innerHeight - 75, 21),
             this.options.transition

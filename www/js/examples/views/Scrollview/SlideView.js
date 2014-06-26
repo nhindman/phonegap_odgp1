@@ -31,7 +31,7 @@ define(function(require, exports, module) {
     var MyPass = require('examples/views/Scrollview/MyPass');
     var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
 //    var Triangle = require('examples/views/Scrollview/Triangle');
-
+  
   function SlideView(options, data) {
       View.apply(this, arguments);
       _createLayout.call(this);
@@ -381,7 +381,8 @@ define(function(require, exports, module) {
             //if user not logged in then fire login prompt
             console.log("user not logged in");
             this.loginPrompt = new LoginPrompt({
-              size: [undefined, undefined]
+              size: [undefined, undefined],
+              data: this.options.data
             });
             this.loginPrompt.pipe(this._eventOutput);
             this.loginPromptMod = new Modifier({
@@ -422,7 +423,7 @@ define(function(require, exports, module) {
 
      //reveals mypass from click on 'OK' on creditcardview
      this._eventOutput.on('pass created', function(){
-      console.log("pass created#####")
+      console.log("pass created##### from slideview");
       this.createPass();
       this.passMoveIn();
      }.bind(this));
@@ -646,21 +647,22 @@ define(function(require, exports, module) {
 
   SlideView.prototype.createPass = function(data){
     if (this.passView) return;
-    var passes = chatRef.child('passes').child(FirebaseRef.user.id);
-    var dataFirebase = {
-      userID: FirebaseRef.user.id, 
-      gymName: $(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '), 
-      price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
-      numDays: window.gymDays, 
-      activated: false
-    };
-    var id = passes.push().name();
-    // dataFirebase.id = id;
-    passes.child(id).set(dataFirebase);
-  
+
+    // var passes = chatRef.child('passes').child(FirebaseRef.user.id);
+    // var dataFirebase = {
+    //   userID: FirebaseRef.user.id, 
+    //   gymName: $(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '), 
+    //   price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
+    //   numDays: window.gymDays, 
+    //   activated: false
+    // };
+    // var id = passes.push().name();
+    // // dataFirebase.id = id;
+    // passes.child(id).set(dataFirebase);
+
     this.passView = new MyPass({
       data: this.options.data,
-      passId: id
+      // passId: id
     });
     this.passViewMod = new StateModifier({
       transform: Transform.translate(0,-window.innerHeight,500)

@@ -25,6 +25,7 @@ define(function(require, exports, module) {
 
     GymListView.prototype = Object.create(View.prototype);
     GymListView.prototype.constructor = GymListView;
+    GymListView.prototype.priceValue = 0;
 
     GymListView.DEFAULT_OPTIONS = {
       size: [undefined, 125],

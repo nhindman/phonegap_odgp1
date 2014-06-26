@@ -8,7 +8,8 @@ define(function(require, exports, module) {
     var Easing = require('famous/transitions/Easing');
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
-
+    var Timer = require('famous/utilities/Timer');
+    
     var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
     
     function MyPass(options, data) {
@@ -20,21 +21,30 @@ define(function(require, exports, module) {
         _createLayout.call(this);
         _createHeader.call(this);
         _createBody.call(this);
-        _createListeners.call(this);
-        debugger;
+        // _createListeners.call(this);
+        // debugger;
         //this will change button to red if pass has been activated
-        var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
-        var self = this;
-        pass.on('child_changed', function(snapshot){
-            debugger;
-            if (snapshot.name() === "activated" && snapshot.val() === true)
-              self.activate();
-          });
-        if (this.options.activated) {
-          this.activate();
-        };
+        // var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
+        // var self = this;
+        // pass.on('child_changed', function(snapshot){
+        //     debugger;
+        //     if (snapshot.name() === "activated" && snapshot.val() === true)
+        //       self.activate();
+        //   });
+        // if (this.options.activated) {
+        //   this.activate();
+        // };
     }
-
+    MyPass.onPassCreate = function (child){
+        console.log("MyPass.onPassCreate fires from mypass.js");
+        MyPass.CreditCardView.paymentSuccess();
+        Timer.setTimeout(function(){
+            console.log("TIMER GOES")
+            this._eventOutput.emit('pass created');
+            MyPass.CreditCardView.moveDown();
+        }.bind(this),2000);
+    };
+    MyPass.CreditCardView = null;
     MyPass.prototype = Object.create(View.prototype);
     MyPass.prototype.constructor = MyPass;
 
@@ -331,7 +341,7 @@ define(function(require, exports, module) {
         this.buttonSurface.on('click', function(e) {
             if(e.detail != null) return false;  
             console.log('use pass clicked');
-            console.log(this.options.passId);
+            // console.log(this.options.passId);
             this.buttonSurface.setContent("<div>Pass Activated</div>");
             this.buttonSurface.setProperties({ 'backgroundColor': 'green' });
             this.buttonSurface.setProperties({ 'color': 'black' });
@@ -395,11 +405,6 @@ define(function(require, exports, module) {
     };
 
     //############## -- END OF BODY -- #######################
-
-
-    function _createListeners() {
-
-    }
 
    MyPass.prototype.activate = function() {
       this.options.activated = true;

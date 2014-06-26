@@ -311,6 +311,12 @@ define(function(require, exports, module) {
 
         }.bind(this));
 
+        //receives pass created from cc view and passes to slideview
+        this._eventOutput.on('pass created', function(){
+            console.log('"pass created" recieved in loginprompt');
+            this._eventOutput.emit('pass created')
+        }.bind(this));
+
         this._eventOutput.on('validated user from register',function(){
             //hide keyboard
             document.activeElement.blur();
@@ -360,7 +366,8 @@ define(function(require, exports, module) {
     //functions for credit card view
     LoginPrompt.prototype.createCreditCardView = function(){
         this.creditCardView = new CreditCardView({
-            size: [undefined, undefined]
+            size: [undefined, undefined], 
+            data: this.options.data
         });
         this.creditCardView.pipe(this._eventOutput);
         this.creditCardViewMod = new StateModifier({
