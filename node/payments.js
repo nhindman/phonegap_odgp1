@@ -79,7 +79,8 @@ var server = http.createServer(function (request, response) {
          };
         dataRef.child('gyms1/'+gym_id).once("value",function(dataSnapshot) {
           console.log(gym_id);
-          gym = dataSnapshot.exportVal();
+          debugger;
+          gym = dataSnapshot.val();
           console.log(gym);
           price = gym.gym_prices[post.price];
           dataRef.child('customers/'+user.id+'/vaultId').once("value",function(dataSnapshot) {
