@@ -316,6 +316,7 @@ define(function(require, exports, module) {
                         //login success
                         console.log("add listener");
                         // debugger;
+                        //sets a listener that firess MyPass.onPassCreate each time new pass is added to the DB
                         chatRef.child('passes/'+FirebaseRef.user.id).on('child_added', MyPass.onPassCreate);
                         console.log("user exists");
                         // self._eventOutput.emit('validated user from welcome back');

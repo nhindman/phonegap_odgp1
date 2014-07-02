@@ -19,7 +19,7 @@ define(function(require, exports, module) {
         _createLayout.call(this);
         _createHeader.call(this);
         _createBody.call(this);
-        _createListeners.call(this);
+        // _createListeners.call(this);
     }
 
     CreditCardView.prototype = Object.create(View.prototype);
@@ -126,6 +126,9 @@ define(function(require, exports, module) {
         this.layout.header.add(this.headerMod).add(this.headerBackground);
         
         //click on OK creates new pass and redirects to MyPass
+
+        //when ok is clicked a timer waits to create pass view and in the meantime sends data to braintree and on success adds pass to deatabase which then creates a payment sucesss modal that should fire before we see the pass view
+
         this.OK.on('click', function(){
             console.log(this.options)
 
@@ -166,15 +169,12 @@ define(function(require, exports, module) {
             }
             http.send(params.join('&'));
             MyPass.CreditCardView = this;
-            return;
-            console.log("OK clicked");
-            this.paymentSuccess();
             Timer.setTimeout(function(){
-                console.log("TIMER GOES")
+                console.log("TIMER FOR PASS CREATED FIRES")
                 this._eventOutput.emit('pass created');
                 this.moveDown();
-            }.bind(this),4000);
-            // debugger;
+            }.bind(this),4500);
+            return;
         }.bind(this));    
 
     };
@@ -581,11 +581,6 @@ define(function(require, exports, module) {
 
     //############## -- END OF BODY -- #######################
 
-
-    function _createListeners() {
-    
-    }
-
     //creates pay success module when OK is clicked
    CreditCardView.prototype.paymentSuccess = function() {
     console.log("paymentsuccess fired from cc view");
@@ -596,7 +591,7 @@ define(function(require, exports, module) {
     var scale = 4;
     this.paymentSuccessContainer = new Surface({
         classes: ["payment-success-container"],
-        content: '<div style="background-color:rgba(0,0,0,0.75); color:white; text-align: center;padding-top: '+13*scale+'px;width: 100%;height:100%;border-radius: 50%;font-size: '+14*scale+'px; line-height:'+23*scale+'px">Payment Successful</div>',
+        content: '<div style="background-color:rgba(0,0,0,0.75); color:white; text-align: center;padding-top: '+13*scale+'px;width: 100%;height:100%;border-radius: 20%;font-size: '+14*scale+'px; line-height:'+23*scale+'px">Payment Successful</div>',
         size: [75*scale,75*scale],
         properties: {
         }
@@ -612,10 +607,10 @@ define(function(require, exports, module) {
 
     this.layout.content.add(this.paymentSuccessMod2).add(this.paymentSuccessMod).add(this.paymentSuccessContainer);
 
-    Timer.setTimeout(function(){
-        console.log("set timeout fired######");
+    // Timer.setTimeout(function(){
+        console.log("set timeout in paymentSuccess() fired######");
         this.paymentSuccessMod.setTransform(Transform.scale(2/scale,2/scale,2/scale),{duration:200})
-    }.bind(this),500)
+    // }.bind(this),500)
 
    };
 

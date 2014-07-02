@@ -422,7 +422,7 @@ define(function(require, exports, module) {
      }.bind(this));
 
      //reveals mypass from click on 'OK' on creditcardview
-     this._eventOutput.on('pass created', function(){
+     this._eventOutput.on('pass created sent from loginprompt', function(){
       console.log("pass created##### from slideview");
       this.createPass();
       this.passMoveIn();
@@ -646,6 +646,7 @@ define(function(require, exports, module) {
   };
 
   SlideView.prototype.createPass = function(data){
+    console.log("createPass fires from slideview");
     if (this.passView) return;
 
     // var passes = chatRef.child('passes').child(FirebaseRef.user.id);

@@ -9,20 +9,16 @@ define(function(require, exports, module) {
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
     var ContainerSurface = require('famous/surfaces/ContainerSurface');
     var Timer = require('famous/utilities/Timer');
-    
+
     var FirebaseRef = require('examples/views/Scrollview/firebaseRef');
     
     function MyPass(options, data) {
         View.apply(this, arguments);
-        // console.log("data inside mypass.js", this.options.data)
-        // console.log("# of days inside mypass.js", window.gymDays)
-        // console.log('total price', $('.right-column').html())
-        // console.log('total days', $('.total-passes').html())
         _createLayout.call(this);
         _createHeader.call(this);
         _createBody.call(this);
-        // _createListeners.call(this);
-        // debugger;
+        
+
         //this will change button to red if pass has been activated
         // var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
         // var self = this;
@@ -36,14 +32,14 @@ define(function(require, exports, module) {
         // };
     }
     MyPass.onPassCreate = function (child){
+        //called each time pass is added to firebase DB and shows MyPass view
         console.log("MyPass.onPassCreate fires from mypass.js");
         MyPass.CreditCardView.paymentSuccess();
-        Timer.setTimeout(function(){
-            console.log("TIMER GOES")
-            this._eventOutput.emit('pass created');
-            MyPass.CreditCardView.moveDown();
-        }.bind(this),2000);
+        // Timer.setTimeout(function(){
+        // MyPass.CreditCardView.moveDown();
+        // }.bind(this));
     };
+
     MyPass.CreditCardView = null;
     MyPass.prototype = Object.create(View.prototype);
     MyPass.prototype.constructor = MyPass;

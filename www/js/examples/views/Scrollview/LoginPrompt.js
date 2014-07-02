@@ -314,7 +314,7 @@ define(function(require, exports, module) {
         //receives pass created from cc view and passes to slideview
         this._eventOutput.on('pass created', function(){
             console.log('"pass created" recieved in loginprompt');
-            this._eventOutput.emit('pass created')
+            this._eventOutput.emit('pass created sent from loginprompt')
         }.bind(this));
 
         this._eventOutput.on('validated user from register',function(){
