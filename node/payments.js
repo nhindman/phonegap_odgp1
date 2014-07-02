@@ -73,16 +73,38 @@ var server = http.createServer(function (request, response) {
                var id = passes.push().name();
                // dataFirebase.id = id;
                passes.child(id).set(dataFirebase);
+
              });
-             // console.log(result);
-           })
+
+             //creating payment record in DB
+             var rootSalesDataRef = new Firebase('https://burning-fire-4148.firebaseio.com');
+             rootSalesDataRef.auth(rootSecret, function (error, authResult){
+               console.log("new payment record being created");
+               var sales = rootSalesDataRef.child('sales').child(user.id);
+               var dataSaleFirebase = {
+                userID: user.id, 
+                vaultID: vaultId,
+                amount: price,
+                ccFourDigits: post.ccNumber.slice(-4),
+                date: new Date().today() + " @ " + new Date().timeNow(),
+                gym: gym.gym_name,
+                pass_type: post.price
+               } 
+               var id = sales.push().name();
+               // dataFirebase.id = id;
+               sales.child(id).set(dataSaleFirebase);
+             });
+             
+           });
          };
+
         dataRef.child('gyms1/'+gym_id).once("value",function(dataSnapshot) {
-          console.log(gym_id);
-          debugger;
+          console.log("HERE's GYM_ID",gym_id);
+          // debugger;
           gym = dataSnapshot.val();
-          console.log(gym);
+          console.log("HERE's GYM",gym);
           price = gym.gym_prices[post.price];
+          console.log("HERE's PRICE", price)
           dataRef.child('customers/'+user.id+'/vaultId').once("value",function(dataSnapshot) {
               var vaultId = dataSnapshot.val();
               // console.log(post.ccNumber);
@@ -112,6 +134,7 @@ var server = http.createServer(function (request, response) {
                   if (result.success) {
                     dataRef.child('customers/'+user.id).update({vaultId: vaultId});
                     runCard(vaultId, price, customerRequest.creditCard.cvv);
+
                   } else {
                     //throw error message, figure out later
                     console.log("<h1>Error: " + result.message + "</h1>");
@@ -164,6 +187,16 @@ var server = http.createServer(function (request, response) {
 
 // Listen on port 8001, IP defaults to 127.0.0.1
 server.listen(8001);
+
+//setting up current time and date for sales object that gets saved to DB
+Date.prototype.today = function () { 
+    return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear();
+}
+
+// For the time now
+Date.prototype.timeNow = function () {
+     return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
+}
 
 // Put a friendly message on the terminal
 console.log("Server running at http://127.0.0.1:8001/");
