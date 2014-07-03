@@ -16,9 +16,9 @@ define(function(require, exports, module) {
         this.itemIndex = index;
 
         this.container = new ContainerSurface({
-            size: [undefined, 100], 
+            size: [undefined, 215], 
             properties: {
-              backgroundColor: 'rgb(64, 179, 118)',
+              backgroundColor: 'black',
               zIndex: 100000
             }
         });
@@ -26,9 +26,10 @@ define(function(require, exports, module) {
         this.add(this.container);
 
         //base panel surface with gym name 
-        this.mainSurface = new Surface({ 
+        this.mainSurface = new Surface({
+           content: '<div class="gym-photo-background"><img width="320" height="'+thirdWindowHeight+'" src="js/img/'+ this.options.data.gym_list_placeholders[i] +'"/></div>',
            properties: {
-               backgroundColor: "#40B376",
+               backgroundColor: "black",
                zIndex: 1,
                borderBottom: "1px solid #3F9165"
            }
@@ -104,6 +105,7 @@ define(function(require, exports, module) {
       data: undefined
     }
 
+    var thirdWindowHeight = window.innerHeight / 2.5;
     //this function listens for clicks on the slider (specifies reaction for 1day, 4day or 1month)
     function _setListeners() {
       this.on('click', function() {

@@ -19,28 +19,24 @@ define(function(require, exports, module) {
         _createBody.call(this);
         
 
-        //this will change button to red if pass has been activated
-        // var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
-        // var self = this;
-        // pass.on('child_changed', function(snapshot){
-        //     debugger;
-        //     if (snapshot.name() === "activated" && snapshot.val() === true)
-        //       self.activate();
-        //   });
-        // if (this.options.activated) {
-        //   this.activate();
-        // };
+        // this will change button to red if pass has been activated
+        var pass = FirebaseRef.chatRef.child('passes').child(FirebaseRef.user.id).child(this.options.passId);
+        var self = this;
+        pass.on('child_changed', function(snapshot){
+            // debugger;
+            if (snapshot.name() === "activated" && snapshot.val() === true)
+              self.activate();
+          });
+        if (this.options.activated) {
+          this.activate();
+        };
     }
     MyPass.onPassCreate = function (child){
-        //called each time pass is added to firebase DB and shows MyPass view
-        console.log("MyPass.onPassCreate fires from mypass.js");
+        //fires this.paymentSuccess() function in CreditCardView.js
         MyPass.CreditCardView.paymentSuccess();
-        // Timer.setTimeout(function(){
-        // MyPass.CreditCardView.moveDown();
-        // }.bind(this));
     };
 
-    MyPass.CreditCardView = null;
+    MyPass.createditCardView = null;
     MyPass.prototype = Object.create(View.prototype);
     MyPass.prototype.constructor = MyPass;
 

@@ -63,6 +63,41 @@ define(function(require, exports, module) {
 
   initApp(GymData());
 
+  Overlay = {
+    show: function (message, showButton){
+        this.hide();
+        var div = document.createElement('div');
+        div.style.position = 'absolute';
+        div.style.width = '100%';
+        div.style.height = '100%';
+        div.style.opacity = '.5';
+        div.style.backgroundColor = 'white';
+        div.style.zIndex = 55555555;
+        div.id = 'overlay';
+        div.innerHTML = message || '';
+        document.body.appendChild(div);
+    },
+    hide: function (){
+      var overlay = document.getElementById('overlay')
+      if(overlay){
+        overlay.parentElement.removeChild(overlay);
+      }
+    }
+  };
+  isListening = false;
+  listenForErrors = function () {
+    if (isListening) return;
+    isListening = true;
+
+    var dataRef = new Firebase('https://burning-fire-4148.firebaseio.com/errors/'+user.id);
+    dataRef.on('child_added', function(snapshot){
+      console.log("snapshot.val()!!",snapshot.val());
+      Overlay.show(snapshot.val(), true);
+      snapshot.ref().remove();
+    });
+
+  };
+
   function initApp(data) {
     
     data = GymData();

@@ -12,7 +12,6 @@ define(function(require, exports, module) {
     var ModifierChain = require('famous/modifiers/ModifierChain')
     var MyPass = require('examples/views/Scrollview/MyPass');
 
-    
     function CreditCardView(options, data) {
         View.apply(this, arguments);
 
@@ -127,9 +126,9 @@ define(function(require, exports, module) {
         
         //click on OK creates new pass and redirects to MyPass
 
-        //when ok is clicked a timer waits to create pass view and in the meantime sends data to braintree and on success adds pass to deatabase which then creates a payment sucesss modal that should fire before we see the pass view
-
         this.OK.on('click', function(){
+
+            //when ok is clicked a timer starts to eventually create pass view but in the meantime sends data to braintree and on success adds a pass to the database. when new pass is added to DB, MyPass.onPassCreate fires which creates a payment sucesss modal that should fire before time runs out on the pass view timer
             console.log(this.options)
 
         //xml post request to send CC data to Braintree server
@@ -147,6 +146,11 @@ define(function(require, exports, module) {
             }
             var http = new XMLHttpRequest();
             var url = "http://localhost:8001/"+encodeURIComponent(this.options.data.gymName.getContent().replace(/<[^>]*>(.*)<[^>]*>/, '$1'));
+            // var gym_id = this.options.data.gymName.getContent().replace(/<[^>]*>(.*)<[^>]*>/, '$1');
+            // var gym;
+            // dataRef.child('gyms1/'+gym_id).once("value",function(dataSnapshot) {
+            //     gym = dataSnapshot.val();
+            // }    
             var params = [
                 'price='+priceOption
             ];
@@ -164,14 +168,14 @@ define(function(require, exports, module) {
 
             http.onreadystatechange = function() {//Call a function when the state changes.
                 if(http.readyState == 4 && http.status == 200) {
-                    //alert(http.responseText);
+                    // debugger;
                 }
             }
             http.send(params.join('&'));
             MyPass.CreditCardView = this;
             Timer.setTimeout(function(){
                 console.log("TIMER FOR PASS CREATED FIRES")
-                this._eventOutput.emit('pass created');
+                // this._eventOutput.emit('pass created');
                 this.moveDown();
             }.bind(this),4500);
             return;

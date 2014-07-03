@@ -65,7 +65,7 @@ var server = http.createServer(function (request, response) {
                var passes = rootDataRef.child('passes').child(user.id);
                var dataFirebase = {
                  userID: user.id, 
-                 gymName: gym.gym_name, 
+                 gymName: gym.gym_name,
                  price: price,
                  numDays: post.price, 
                  activated: false
@@ -76,7 +76,7 @@ var server = http.createServer(function (request, response) {
 
              });
 
-             //creating payment record in DB
+             //create payment record in DB under 'sales'
              var rootSalesDataRef = new Firebase('https://burning-fire-4148.firebaseio.com');
              rootSalesDataRef.auth(rootSecret, function (error, authResult){
                console.log("new payment record being created");
@@ -84,8 +84,7 @@ var server = http.createServer(function (request, response) {
                var dataSaleFirebase = {
                 userID: user.id, 
                 vaultID: vaultId,
-                amount: price,
-                ccFourDigits: post.ccNumber.slice(-4),
+                amount: price, 
                 date: new Date().today() + " @ " + new Date().timeNow(),
                 gym: gym.gym_name,
                 pass_type: post.price
@@ -132,7 +131,7 @@ var server = http.createServer(function (request, response) {
                   var vaultId = result.customer.id;
                   console.log("vaultid created "+vaultId);
                   if (result.success) {
-                    dataRef.child('customers/'+user.id).update({vaultId: vaultId});
+                    dataRef.child('customers/'+user.id).update({vaultId: vaultId, cardNum: customerRequest.creditCard.number.slice(-4)});
                     runCard(vaultId, price, customerRequest.creditCard.cvv);
 
                   } else {
@@ -148,30 +147,6 @@ var server = http.createServer(function (request, response) {
         console.log("SDD",authResult);
         var user = authResult.auth;
 
-        
-
-        // if(!post.ccNum && user.vault_number){
-          //gateway.transaction.sale({customerId: user.vault_number, ....})
-          //}else{/* do below */}
-        //gateway.customer.create
-
-        // gateway.transaction.sale({
-        //   amount: '5.00',
-        //   creditCard: {
-        //     number: post.ccNumber,
-        //     expirationMonth: post.ccExpireMonth,
-        //     expirationYear: post.ccExpireYear,
-        //     cvv: post.ccCVV,
-        //     cardholderName: post.ccName
-        //   }
-        // }, function (err, result){
-        //   if(err) throw err;
-        //   if(result.success){
-        //     console.log('Transaction ID: '+result.transaction.id);
-        //   }else{
-        //     console.log(result.message);
-        //   }
-        // });
       }, function (){
         console.log('failed');
       });

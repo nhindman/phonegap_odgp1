@@ -179,15 +179,6 @@ define(function(require, exports, module) {
   //###################------BODY-----#####################
   function _createBody() {
     console.log("data inside SlideView",$(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '));
-    // this.bodySurface = new View({
-    //   classes: ["content-surface"],
-    //   size: [undefined, windowHeight],
-    //   properties: {
-    //     backgroundColor: "red",
-    //     zIndex: 10
-    //   }, 
-    //   color: "white"
-    // });
 
     //######### -- SCROLLVIEW carousel of gym photos --- ############
 
@@ -366,6 +357,20 @@ define(function(require, exports, module) {
 
   function _setListeners() {
 
+    //sets price of 0, 1 or 2
+    var priceOption;
+    switch(window.gymDays){
+        case '1-Month':
+        priceOption=2;
+        break;
+        case '4-Day':
+        priceOption=1;
+        break;
+        default:
+        priceOption=0;
+        break;
+    }
+
     //this receives clicks from overfooter and creates confirmpurchase view
      this._eventOutput.on('buy-now-clicked', function(data){
         //if a confirm purchase view exists then check if user is logged in 
@@ -373,23 +378,41 @@ define(function(require, exports, module) {
         if (this.confirmPurchase) {
             //if user is logged in create mypass when confirm purchase is clicked
             if(FirebaseRef.user){
+              window.initPassListen();
               console.log("REGISTERED USER PURCHASES PASSES");
-              this.createPass();
-              this.passMoveIn();
-              // return;
+              //fire xml post request to send data to braintree
+              var http = new XMLHttpRequest();
+              var url = "http://localhost:8001/"+encodeURIComponent(this.options.data.gymName.getContent().replace(/<[^>]*>(.*)<[^>]*>/, '$1'));
+              var params = [
+                'price='+priceOption
+              ];
+              params.push("authToken="+encodeURIComponent(user.firebaseAuthToken));
+              http.open("POST", url, true);
+              http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+              http.onreadystatechange = function() {//Call a function when the state changes.
+                  if(http.readyState == 4 && http.status == 200) {
+                      //alert(http.responseText);
+                  }
+              }
+              http.send(params.join('&'));
+              // this.createPass();
+              // this.passMoveIn();
+              // return true;
+            }else{
+              //if user not logged in then fire login prompt
+              console.log("user not logged in");
+              this.loginPrompt = new LoginPrompt({
+                size: [undefined, undefined],
+                data: this.options.data
+              });
+              this.loginPrompt.pipe(this._eventOutput);
+              this.loginPromptMod = new Modifier({
+                transform:Transform.translate(0,0,100)
+              });
+              this.add(this.loginPromptMod).add(this.loginPrompt);
+              this._eventOutput.emit('userLogin');  
             }
-            //if user not logged in then fire login prompt
-            console.log("user not logged in");
-            this.loginPrompt = new LoginPrompt({
-              size: [undefined, undefined],
-              data: this.options.data
-            });
-            this.loginPrompt.pipe(this._eventOutput);
-            this.loginPromptMod = new Modifier({
-              transform:Transform.translate(0,0,100)
-            });
-            this.add(this.loginPromptMod).add(this.loginPrompt);
-            this._eventOutput.emit('userLogin');  
       
         } else {
           // console.log("buy-now-clicked")
@@ -410,8 +433,23 @@ define(function(require, exports, module) {
     //receives registered user click on sign-in button from WelcomeBackView, through its parent, LoginPrompt; pass should now fire
     this._eventOutput.on('welcome back registered user, fire pass', function(){
       console.log("$$$$$$registered user sign-in RECEIVED IN SLIDEVIEW")
-      this.createPass();
-      this.passMoveIn();
+      var http = new XMLHttpRequest();
+      var url = "http://localhost:8001/"+encodeURIComponent(this.options.data.gymName.getContent().replace(/<[^>]*>(.*)<[^>]*>/, '$1'));
+      var params = [
+        'price='+priceOption
+      ];
+      params.push("authToken="+encodeURIComponent(user.firebaseAuthToken));
+      http.open("POST", url, true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      http.onreadystatechange = function() {//Call a function when the state changes.
+          if(http.readyState == 4 && http.status == 200) {
+              //alert(http.responseText);
+          }
+      }
+      http.send(params.join('&'));
+      // this.createPass();
+      // this.passMoveIn();
     }.bind(this));
 
      //receives click from confirmpurchase background and sends to overviewfooter
@@ -421,12 +459,55 @@ define(function(require, exports, module) {
        this._eventInput.emit('confirmPurchaseBackground clicked')
      }.bind(this));
 
-     //reveals mypass from click on 'OK' on creditcardview
-     this._eventOutput.on('pass created sent from loginprompt', function(){
-      console.log("pass created##### from slideview");
-      this.createPass();
-      this.passMoveIn();
-     }.bind(this));
+     // reveals mypass from click on 'OK' on creditcardview
+     // this._eventOutput.on('pass created sent from loginprompt', function(){
+     //  console.log("pass created##### from slideview");
+     //  this.createPass();
+     //  this.passMoveIn();
+     // }.bind(this));
+
+     //listen for when pass is added to DB and when it is fires createpass(), goes through all passes a user has bought and ignores old ones
+     var self = this;
+     window.t = self;
+     var passListening = false;
+     window.initPassListen = function (){
+      listenForErrors();
+
+      if(passListening){
+        return;
+      }
+      var initial_passIds;
+       var dataRef = new Firebase('https://burning-fire-4148.firebaseio.com/passes/'+user.id);
+       dataRef.once("value", function(snapshot){
+        console.log("SNAPSHOT", snapshot);
+        if(snapshot.val()){
+          var initial_passIds = Object.keys(snapshot.val());
+        }else{
+          var initial_passIds = [];
+        }
+        var fn = function(snapshot){
+          if (initial_passIds.indexOf(snapshot.name()) != -1){
+            return;
+          }
+           var doCreatePass = function(){
+             setTimeout(function (){
+               var passId = snapshot.name();
+               var retVal = self.createPass(null,passId);
+               if(!retVal || login_method == 'register'){
+                self.passMoveIn();
+              }
+              login_method = 'auto';
+            }, 1000);
+           };
+
+           doCreatePass();
+           dataRef.off('child_added', fn);
+        };
+        dataRef.on('child_added', fn);
+       });
+       
+       passListening = true;
+     };
 
      this._eventOutput.on('pass closed', function(){
       console.log("pass closed");
@@ -645,28 +726,27 @@ define(function(require, exports, module) {
 
   };
 
-  SlideView.prototype.createPass = function(data){
+  SlideView.prototype.createPass = function(data, passId){
+    var pass;
+    var id;
     console.log("createPass fires from slideview");
     if (this.passView) return;
 
-    // var passes = chatRef.child('passes').child(FirebaseRef.user.id);
-    // var dataFirebase = {
-    //   userID: FirebaseRef.user.id, 
-    //   gymName: $(this.options.data.gymName.getContent()).text().split(/[ ]+/).join(' '), 
-    //   price: $(this.options.data.price.getContent()).text().split(/[ ]+/).join(' '),
-    //   numDays: window.gymDays, 
-    //   activated: false
-    // };
-    // var id = passes.push().name();
-    // // dataFirebase.id = id;
-    // passes.child(id).set(dataFirebase);
+    // var dataRef = new Firebase('https://burning-fire-4148.firebaseio.com/passes');
+    // dataRef.on('child_added',function(snapshot){
+    //   id = snapshot.name();
+    //   console.log("passId from slideview",id);
+    // });
+
+    // console.log("passId from slideview",id);
 
     this.passView = new MyPass({
       data: this.options.data,
-      // passId: id
+      passId: passId
     });
+
     this.passViewMod = new StateModifier({
-      transform: Transform.translate(0,-window.innerHeight,500)
+      transform: Transform.translate(0,-window.innerHeight,50000000)
     });
 
     // this line will return all the passes for a certain user
@@ -674,9 +754,11 @@ define(function(require, exports, module) {
 
     this.add(this.passViewMod).add(this.passView);
     this.passView.pipe(this._eventOutput);
+    return true;
   };
 
   SlideView.prototype.passMoveIn = function(){
+    console.log("passMoveIn called from slideview");
     this.passViewMod.setTransform(Transform.translate(0,0,500));
   };
 

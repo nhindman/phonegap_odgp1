@@ -133,7 +133,7 @@ define(function(require, exports, module) {
       this.background = new Surface({
           size:[undefined,undefined],
           properties:{
-              backgroundColor:'#40B376'
+              backgroundColor:'black'
           }
       });
       this.backgroundMod = new Modifier({

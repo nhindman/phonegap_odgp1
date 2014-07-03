@@ -289,11 +289,14 @@ define(function(require, exports, module) {
             FirebaseRef.ready = function(success){
                 if(success){
                     //login success
+                    login_method = 'auto';
                     console.log("add listener");
+                    window.initPassListen();
                     // debugger;
                     //sets a listener that firess MyPass.onPassCreate each time new pass is added to the DB
-                    chatRef.child('passes/'+FirebaseRef.user.id).on('child_added', MyPass.onPassCreate);
+                    //chatRef.child('passes/'+FirebaseRef.user.id).on('child_added', MyPass.onPassCreate);
                     console.log("user exists");
+                    login_method = 'register';
                     self._eventOutput.emit('validated user from welcome back');
                 }else{
                     //login failed
